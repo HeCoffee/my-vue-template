@@ -12,7 +12,7 @@ export function money (value, decimal = 2) {
 }
 
 // 给定数值 百分号化 参数
-export function percent(val, decimal = 2) {
+export function percent (val, decimal = 2) {
   let output
   if (!isNaN(val)) {
     output = (val * 100).toFixed(decimal, 10) + '%'
