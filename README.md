@@ -13,6 +13,13 @@ npm run dev
 
 # build for production with minification
 npm run build
+这里使用的构建方式是： Runtime-only （只包含运行时）
+Runtime-only 打包方式并不支持vue实例中的template属性,如下代码：
+`new Vue({
+  template: '<div>{{ hi }}</div>'
+})`
+若是开发需求需要用到请使用 Runtime + Compiler（运行时+编译器） 的打包方式
+只要将build/webpack.base.conf中的alias中的'vue$': 'vue/dist/vue.esm.js'注释拿掉即可
 
 # build for production and view the bundle analyzer report
 npm run build --report
