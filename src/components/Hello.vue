@@ -30,6 +30,11 @@ export default {
   },
   mounted () {
     console.log(this.$http)
+    this
+      .$http({ url, params })
+      .then((result) => {
+        console.log(result)
+      })
   }
 }
 </script>

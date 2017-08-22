@@ -18,3 +18,9 @@ export const putMethod = ({ url, data, headers }) => {
   const method = 'put'
   return axios({ method, url, data, headers })
 }
+
+// delete
+export const deleteMethod = ({ url, params, headers }) => {
+  const method = 'put'
+  return axios({ method, url, params, headers })
+}

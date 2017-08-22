@@ -2,7 +2,7 @@
 
 > A Vue.js project template
 
-## 目录结构
+### 目录结构
 ```
 ├── build                 webpack 打包,预编译,热加载 配置文件
 ├── config                webpack 开发,测试,生产环境的配置文件
@@ -16,7 +16,7 @@
 
 ```
 
-## 关于程序（src）
+### 关于程序（src）
 
 - 程序入口(`src/main.js`)
 - 路由配置(`src/router`)
@@ -127,6 +127,42 @@ import AxiosPlugin from './plugins/axios_plugin' // 引入http库插件
 Vue.use(AxiosPlugin, '$http') // 覆盖默认别名
 ```
 <p>这里推荐用第二种,在plugins/中已编写了几个常用库的插件例子</p>
+
+### 数据请求(http)
+- 在状态管理中进行数据请求
+```
+# 在store/action中进行数据请求,建议使用utils中的http公共函数
+import {getMethod} from '../../../utils/http'
+const prefix = '/api/v1'
+export default {
+  // default action
+  async getTemplateValueAction ({ commit }, params) {
+    let url = `${prefix}/test`
+    let result = await getMethod({ url, params })
+    commit('setTemplateValue', result)
+  }
+}
+```
+- 不使用状态管理,在*.vue组件进行数据请求
+```
+# 建议使用插件形式引入 引入方式请看插件部分
+# Hello.vue
+export default {
+  name: 'hello',
+  mounted () {
+    let url = 'api/v1/test'
+    let params = {}
+    this
+      .$http({ url, params })
+      .then((result) => {
+        console.log(result)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+}
+```
 
 -------
 未完待续...
