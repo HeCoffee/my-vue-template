@@ -8,7 +8,7 @@ export default {
   // default action
   async getTemplateValueAction ({ commit }, params) {
     let url = `${prefix}/test`
-    let result = await getMethod({ url, params })
-    commit('setTemplateValue', result)
+    let response = await getMethod({ url, params })
+    commit('setTemplateValue', response.data)
   }
 }

@@ -138,8 +138,8 @@ export default {
   // default action
   async getTemplateValueAction ({ commit }, params) {
     let url = `${prefix}/test`
-    let result = await getMethod({ url, params })
-    commit('setTemplateValue', result)
+    let response = await getMethod({ url, params })
+    commit('setTemplateValue', response.data)
   }
 }
 ```
@@ -151,17 +151,20 @@ export default {
   name: 'hello',
   mounted () {
     let url = 'api/v1/test'
+    let method = 'GET'
     let params = {}
     this
-      .$http({ url, params })
-      .then((result) => {
-        console.log(result)
+      .$http({ url, method, params })
+      .then((response) => {
+        console.log(response)
       })
       .catch(function (error) {
         console.log(error)
       })
   }
 }
+# axios的语法糖 this.$http.get(url[, config]).then().catch()
+# 详细语法糖请看axios文档
 ```
 
 -------

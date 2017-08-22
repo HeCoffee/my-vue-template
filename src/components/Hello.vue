@@ -29,17 +29,14 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$http)
-    this
-      .$http({ url, params })
-      .then((result) => {
-        console.log(result)
-      })
+    console.log(this.$http) // 有输出 说明引入成功
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- 添加 scoped 属性 使得以下css只在本组件下有效-->
+<!-- 建议样式统一写在styles中, *.vue中只编写html模板以及script-->
 <style scoped>
 h1, h2 {
   font-weight: normal;
