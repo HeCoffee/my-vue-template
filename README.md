@@ -16,6 +16,17 @@
 
 ```
 
+## 关于程序（src）
+
+- 程序入口(`src/main.js`)
+- 路由配置(`src/router`)
+- 状态管理(`src/store`)
+- 组件与视图(`src/components`)
+- 插件(`src/plugins`)
+- 公共函数,过滤器函数(`src/utils`)
+- 样式(`src/styles`)
+
+
 ### 安装依赖
 ```
 # install dependencies
@@ -52,7 +63,7 @@ new Vue({
 #只要将build/webpack.base.conf中的alias中的'vue$': 'vue/dist/vue.esm.js'注释拿掉即可
 ```
 
-<p>但是Runtime-only打包方式的项目大小比Runtime + Compiler打包方式的项目<b>小30%</b>的体积</p>
+<p>Runtime-only打包方式的项目大小比Runtime + Compiler打包方式的项目<b>小30%</b>的体积</p>
 <p>通过vue-loader会将*.vue文件中的模板预编译成js 并不需要编译器</p>
 <p>所以官方建议<b>尽可能使用Runtime-only打包方式</b></p>
 
@@ -75,4 +86,47 @@ npm test
 - [eslint](https://github.com/eslint/eslint);
 - [standard](https://github.com/feross/standard)
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+### 过滤器
+<p>vue官方不提供过滤器,需要自定义,可参考src/utils/filter.js进行编写</p>
+
+```
+# main.js
+import * as filters from './utils/filter' 
+Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
+```
+
+### 插件
+<p>很多需求并不需要自己重新编写,引入相对应的库即可</p>
+<p>常用的引入工具库的方式有两种</p>
+
+- *.vue当中import进去
+```
+# MyComponent.vue 文件
+import _ from 'lodash';
+export default {
+  created() {
+    console.log(_.isEmpty() ? 'Lodash已经引入' : '引入失败');
+  }
+}
+```
+- 将工具库代理为 Vue 原型对象的属性
+
+```
+# plugins/axios_plugin.js
+# 官方推荐的 http请求库
+import axios from 'axios'
+export default {
+  // 默认别名是 $axios
+  install: function (Vue, name = '$axios') {
+    Object.defineProperty(Vue.prototype, name, { value: axios })
+  }
+}
+# main.js
+import AxiosPlugin from './plugins/axios_plugin' // 引入http库插件
+Vue.use(AxiosPlugin, '$http') // 覆盖默认别名
+```
+<p>这里推荐用第二种,在plugins/中已编写了几个常用库的插件例子</p>
+
+-------
+未完待续...
