@@ -5,7 +5,7 @@ import Hello from '@/components/Hello'
 // 配置参数 钩子函数等用法请查阅vue-router文档
 Vue.use(Router)
 
-// 前缀
+// 前缀(命名空间)
 const prefix = ''
 
 const router = new Router({
