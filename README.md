@@ -35,10 +35,10 @@ npm install
 
 ### 启动开发环境
 
-``` 
+```
 # serve with hot reload at localhost:8080
-# 启动开发环境 端口号为8080 
-# 开发环境配置文件 config/index.js dev属性中  
+# 启动开发环境 端口号为8080
+# 开发环境配置文件 config/index.js dev属性中
 
 npm run dev
 ```
@@ -92,7 +92,7 @@ npm test
 
 ```
 # main.js
-import * as filters from './utils/filter' 
+import * as filters from './utils/filter'
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
 ```
 
@@ -113,20 +113,32 @@ export default {
 - 将工具库代理为 Vue 原型对象的属性
 
 ```
+
 # plugins/axios_plugin.js
 # 官方推荐的 http请求库
 import axios from 'axios'
 export default {
   // 默认别名是 $axios
   install: function (Vue, name = '$axios') {
-    Object.defineProperty(Vue.prototype, name, { value: axios })
+    Object.defineProperty(Vue.prototype, name, { value: axios, enumerable: true })
   }
 }
+
 # main.js
 import AxiosPlugin from './plugins/axios_plugin' // 引入http库插件
 Vue.use(AxiosPlugin, '$http') // 覆盖默认别名
 ```
 <p>这里推荐用第二种,在plugins/中已编写了几个常用库的插件例子</p>
+<p>采用第二种引入方式后，写公共函数时亦可直接调用方式如下</p>
+
+```
+# 例子：get 请求
+import Vue from 'vue'
+
+export function get(options) {
+  return Vue.prototype.$axios.get(options)
+}
+```
 
 ### 数据请求(http)
 - 在状态管理中进行数据请求
